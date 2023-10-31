@@ -15,7 +15,7 @@ export default (req, res, next) => {
             next();
         } catch (err) {
             return res.status(403).json({
-                message: 'Access denied'
+                message: 'Access denied 1'
             })
         }
     } else {

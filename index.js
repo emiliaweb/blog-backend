@@ -5,9 +5,11 @@ import mongoose from "mongoose";
 import { validationResult } from "express-validator";
 import dotenv from 'dotenv'
 
-import { registerValidation } from './validations/auth.js';
+import { registerValidation, loginValidation } from './validations/auth.js';
 import checkAuth from "./utils/checkAuth.js";
 import * as UserController from "./controllers/UserController.js";
+import * as PostController from "./controllers/PostController.js";
+import { postCreateValidation } from "./validations/article.js";
 
 dotenv.config();
 
@@ -26,6 +28,12 @@ app.use(express.json());
 app.post('/auth/login', UserController.login)
 app.post('/auth/register', registerValidation, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+// app.get('/posts', PostController.getAll);
+// app.get('/posts/:id', PostController.getOne);
+app.post('/posts', checkAuth, postCreateValidation, PostController.create);
+// app.delete('/posts/:id', PostController.remove);
+// app.patch('/posts/:id', PostController.update);
 
 app.listen(4444, (error) => {
     if (error) {
